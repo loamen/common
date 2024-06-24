@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="340mm"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_dialog_bg_main"
+        android:orientation="horizontal"
+        android:padding="30mm">
+
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="300mm"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:src="@drawable/app_homepage_qrcode" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20mm"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="480mm"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="#CC000000"
+                android:textSize="24mm"
+                tools:text="本软件只提供数据聚合展示功能，所有资源来自网上和用户自定义。软件本身不参与任何制作、上传、储存、下载等内容。软件仅供学习参考，请于安装后24小时内删除。" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0mm"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0mm"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_dialog_vod"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="2mm">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="10mm"
+                        android:text="退出应用"
+                        android:textColor="@color/color_CC000000"
+                        android:textSize="22mm" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_dismiss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_dialog_vod"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="2mm">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15mm"
+                        android:layout_marginLeft="15mm"
+                        android:gravity="center"
+                        android:padding="10mm"
+                        android:text="我再看看"
+                        android:textColor="@color/color_CC000000"
+                        android:textSize="22mm" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
