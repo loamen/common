@@ -1,0 +1,6 @@
+def rootDir = file(".")
+
+def modulePrefix = ':'
+
+include modulePrefix + 'common'
+project(modulePrefix + 'common').projectDir = new File(rootDir, '')
