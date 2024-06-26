@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="positive">我再看看</string>
+    <string name="negative">退出应用</string>
+</resources>

@@ -1,100 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/code"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@color/color_FFFFFF"
+        android:focusable="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_homepage_qrcode" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_toEndOf="@+id/code"
+        android:layout_toRightOf="@+id/code"
+        android:ellipsize="end"
+        android:focusable="true"
+        android:lineSpacingExtra="4dp"
+        android:maxLines="3"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
+        android:textColor="#CC000000"
+        android:textSize="18sp"
+        tools:text="本软件只提供数据聚合展示功能，所有资源来自网上和用户自定义。软件本身不参与任何制作、上传、储存、下载等内容。软件仅供学习参考，请于安装后24小时内删除。" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="340mm"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_dialog_bg_main"
-        android:orientation="horizontal"
-        android:padding="30mm">
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/info"
+        android:layout_alignLeft="@+id/info"
+        android:layout_alignBottom="@+id/code"
+        android:orientation="horizontal">
 
-
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="300mm"
+        <TextView
+            android:id="@+id/negative"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:focusable="false"
-            android:src="@drawable/app_homepage_qrcode" />
+            android:layout_weight="1"
+            android:background="@drawable/button_dialog_vod"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/negative"
+            android:textColor="@color/color_CC000000"
+            android:textSize="14sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20mm"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/positive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_dialog_vod"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/positive"
+            android:textColor="@color/color_CC000000"
+            android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_remark"
-                android:layout_width="480mm"
-                android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.5"
-                android:textColor="#CC000000"
-                android:textSize="24mm"
-                tools:text="本软件只提供数据聚合展示功能，所有资源来自网上和用户自定义。软件本身不参与任何制作、上传、储存、下载等内容。软件仅供学习参考，请于安装后24小时内删除。" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0mm"
-                android:layout_weight="1" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0mm"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/ll_exit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_dialog_vod"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="2mm">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="10mm"
-                        android:text="退出应用"
-                        android:textColor="@color/color_CC000000"
-                        android:textSize="22mm" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_dismiss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_dialog_vod"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="2mm">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15mm"
-                        android:layout_marginLeft="15mm"
-                        android:gravity="center"
-                        android:padding="10mm"
-                        android:text="我再看看"
-                        android:textColor="@color/color_CC000000"
-                        android:textSize="22mm" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

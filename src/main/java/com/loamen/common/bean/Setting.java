@@ -101,4 +101,15 @@ public class Setting implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public Setting(){
+        this.newVersion = "2.3.1";
+        this.disableOldVersion = false;
+        this.showNotice = false;
+        this.imageUrl = "http://box.iqinu.com/img/dxys.jpg";
+        this.apiUrl = "http://box.iqinu.com";
+        this.remark = "在匆匆岁月里，多少美好瞬间已成过去，再回首，恍然如梦。虽不能相伴到最后，仍感激命运曾让我们相遇。离别也是人生的旅程，愿未来的你仍能与家人共享电视机前的美好时光。";
+        this.showMarquee = true;
+        this.marqueeContent = "温馨提示：请勿相信视频中任何广告，谨防上当！";
+    }
 }

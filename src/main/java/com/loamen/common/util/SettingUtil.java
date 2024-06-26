@@ -4,9 +4,12 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -20,14 +23,20 @@ import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
 
 public class SettingUtil {
+    private static final String TAG = "SettingUtil";
+
     public interface SettingCallback {
         void onEventOccurred();
     }
 
-    /**
-     * 显示通知弹窗
-     */
-    private NoticeDialog noticeDialog;
+    private static SettingUtil instance;
+
+    public static SettingUtil get() {
+        if (instance == null) {
+            instance = new SettingUtil();
+        }
+        return instance;
+    }
 
     /**
      * 获取服务器配置并返回接口
@@ -39,18 +48,23 @@ public class SettingUtil {
         OkGo.<String>get(Config.CONFIG_URL)
                 .execute(new AbsCallback<String>() {
                     @Override
-                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                    public String convertResponse(okhttp3.Response response) {
                         if (response.body() != null) {
-                            return response.body().string();
-                        } else {
-                            throw new IllegalStateException("网络请求错误");
+                            try {
+                                return response.body().string();
+                            } catch (Exception e) {
+                                Log.e(TAG, "convertResponse: ", e);
+                                return null;
+                            }
                         }
+                        return null;
                     }
 
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
                             String json = response.body();
+                            Log.d(TAG, "onSuccess: " + json);
 
                             GsonBuilder gsonBuilder = new GsonBuilder();
                             gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
@@ -83,13 +97,14 @@ public class SettingUtil {
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            Log.e(TAG, "onSuccess: ", e);
                         }
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        Log.d(TAG, "onError: " + response.body());
                         //如果链接失败，尝试备份地址
                         if (!Config.CONFIG_URL.equals(Config.CONFIG_URL_BAK)) {
                             Config.CONFIG_URL = Config.CONFIG_URL_BAK;
@@ -126,16 +141,12 @@ public class SettingUtil {
         if (setting == null) {
             Toast.makeText(context, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show();
         } else {
-            if (noticeDialog == null) {
-                noticeDialog = new NoticeDialog(context, setting);
-                noticeDialog.setOnClickListener(view -> {
-                    //退出程序
-                    if (callback != null) {
-                        callback.onEventOccurred();
-                    }
-                });
-            }
-            noticeDialog.show();
+            NoticeDialog.create((FragmentActivity) context, setting).setOnClickListener(view -> {
+                //退出程序
+                if (callback != null) {
+                    callback.onEventOccurred();
+                }
+            }).show();
         }
     }
 }
