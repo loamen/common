@@ -124,7 +124,7 @@ public class SettingUtil {
                         } else {
                             Log.d(TAG, "onError: 尝试备份地址失败");
                             //回调方法
-                            callback(callback, Config.HAWK_API_URL);
+                            callback(callback, Config.API_URL);
                         }
                     }
                 });
