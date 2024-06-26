@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/code"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
         android:background="@color/color_FFFFFF"
         android:focusable="false"
         android:scaleType="centerCrop"
@@ -22,10 +22,8 @@
         android:layout_marginLeft="12dp"
         android:layout_toEndOf="@+id/code"
         android:layout_toRightOf="@+id/code"
-        android:ellipsize="end"
         android:focusable="true"
         android:lineSpacingExtra="4dp"
-        android:maxLines="3"
         android:paddingStart="4dp"
         android:paddingLeft="4dp"
         android:paddingEnd="4dp"

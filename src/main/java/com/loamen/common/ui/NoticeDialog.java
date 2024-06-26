@@ -65,7 +65,7 @@ public class NoticeDialog implements DialogInterface.OnDismissListener {
 
     private void initDialog() {
         WindowManager.LayoutParams params = Objects.requireNonNull(dialog.getWindow()).getAttributes();
-        params.width = (int) (ResUtil.getScreenWidth(activity) * 0.6f);
+        params.width = (int) (ResUtil.getScreenWidth(activity) * 0.66f);
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setDimAmount(0);
         dialog.setOnDismissListener(this);
