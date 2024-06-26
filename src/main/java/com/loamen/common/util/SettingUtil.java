@@ -1,5 +1,6 @@
 package com.loamen.common.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,11 +25,13 @@ import com.orhanobut.hawk.Hawk;
 
 public class SettingUtil {
     private static final String TAG = "SettingUtil";
+    private Context mContext;
 
     public interface SettingCallback {
-        void onEventOccurred();
+        void onEventOccurred(String url);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private static SettingUtil instance;
 
     public static SettingUtil get() {
@@ -38,13 +41,21 @@ public class SettingUtil {
         return instance;
     }
 
+    public SettingUtil init(Context context) {
+        if (this.mContext == null) {
+            this.mContext = context;
+            Hawk.init(context).build();
+        }
+        return this;
+    }
+
     /**
      * 获取服务器配置并返回接口
      *
      * @param callback 回调方法
      */
     public void getConfig(TextView tvNotice, SettingCallback callback) {
-
+        Log.d(TAG, "getConfig: " + Config.CONFIG_URL);
         OkGo.<String>get(Config.CONFIG_URL)
                 .execute(new AbsCallback<String>() {
                     @Override
@@ -86,32 +97,45 @@ public class SettingUtil {
                                 tvNotice.setText(setting.getMarqueeContent());
                             }
 
-                            String apiUrl = Hawk.get(Config.API_URL, "");
+                            String apiUrl = Hawk.get(Config.HAWK_API_URL, "");
                             //显示默认数据
                             if (apiUrl.isEmpty() && !TextUtils.isEmpty(setting.getApiUrl())) {
                                 //保存配置接口地址
-                                Hawk.put(Config.API_URL, setting.getApiUrl());
+                                Hawk.put(Config.HAWK_API_URL, setting.getApiUrl());
                                 //回调方法
-                                if (callback != null) {
-                                    callback.onEventOccurred();
-                                }
+                                callback(callback, setting.getApiUrl());
                             }
                         } catch (Exception e) {
                             Log.e(TAG, "onSuccess: ", e);
+                            //回调方法
+                            callback(callback, Config.API_URL);
                         }
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        Log.d(TAG, "onError: " + response.body());
+                        Log.d(TAG, "onError: " + response.getException().getMessage());
                         //如果链接失败，尝试备份地址
                         if (!Config.CONFIG_URL.equals(Config.CONFIG_URL_BAK)) {
+                            Log.d(TAG, "onError: 如果链接失败，尝试备份地址");
                             Config.CONFIG_URL = Config.CONFIG_URL_BAK;
                             getConfig(tvNotice, callback);
+                        } else {
+                            Log.d(TAG, "onError: 尝试备份地址失败");
+                            //回调方法
+                            callback(callback, Config.HAWK_API_URL);
                         }
                     }
                 });
+    }
+
+    private void callback(SettingCallback callback, String url) {
+        //回调方法
+        if (callback != null) {
+            Log.d(TAG, "callback: " + url);
+            callback.onEventOccurred(url);
+        }
     }
 
     /**
@@ -140,12 +164,12 @@ public class SettingUtil {
         Setting setting = Config.SETTING;
         if (setting == null) {
             Toast.makeText(context, "再按一次返回键退出应用", Toast.LENGTH_SHORT).show();
+            //退出程序
+            callback(callback, setting.getApiUrl());
         } else {
             NoticeDialog.create((FragmentActivity) context, setting).setOnClickListener(view -> {
                 //退出程序
-                if (callback != null) {
-                    callback.onEventOccurred();
-                }
+                callback(callback, setting.getApiUrl());
             }).show();
         }
     }

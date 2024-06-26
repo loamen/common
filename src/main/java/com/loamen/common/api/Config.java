@@ -16,6 +16,8 @@ public class Config {
      * 公众号
      */
     public static final String GZH = "公众号：东曦影视";
+    public static final String API_URL = "http://box.iqinu.com";
 
-    public static final String API_URL = "api_url";
+    public static final String HAWK_API_URL = "api_url";
+
 }
