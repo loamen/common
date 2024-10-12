@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.FieldNamingPolicy;
@@ -22,6 +23,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
+
+import java.util.ArrayList;
 
 public class SettingUtil {
     private static final String TAG = "SettingUtil";
@@ -108,7 +111,7 @@ public class SettingUtil {
                         } catch (Exception e) {
                             Log.e(TAG, "onSuccess: ", e);
                             //回调方法
-                            callback(callback, Config.API_URL);
+                            callback(callback, Config.DEFAULT_API_URL);
                         }
                     }
 
@@ -124,10 +127,27 @@ public class SettingUtil {
                         } else {
                             Log.d(TAG, "onError: 尝试备份地址失败");
                             //回调方法
-                            callback(callback, Config.API_URL);
+                            callback(callback, Config.DEFAULT_API_URL);
                         }
                     }
                 });
+
+        //保存配置接口地址
+        String apiUrl = Hawk.get(Config.HAWK_API_URL, "");
+        if (TextUtils.isEmpty(apiUrl)) {
+            //保存历史配置接口地址
+            ArrayList<String> history = Hawk.get(Config.HAWK_API_HISTORY, new ArrayList<>());
+            ArrayList<String> apis = getStrings();
+
+            for (String api : apis) {
+                if (!history.contains(api))
+                    history.add(0, api);
+            }
+
+            if (history.size() > 30)
+                history.remove(30);
+            Hawk.put(Config.HAWK_API_HISTORY, history);
+        }
     }
 
     private void callback(SettingCallback callback, String url) {
@@ -136,6 +156,23 @@ public class SettingUtil {
             Log.d(TAG, "callback: " + url);
             callback.onEventOccurred(url);
         }
+    }
+
+    private static @NonNull ArrayList<String> getStrings() {
+        ArrayList<String> apis = new ArrayList<>();
+        apis.add("https://raw.kkgithub.com/lmclub/box/main/app/conf/tv.json");
+        apis.add("http://xn--sss604efuw.com/tv");
+        apis.add("http://tvbox.xn--4kq62z5rby2qupq9ub.xyz/");
+        apis.add("http://cdn.qiaoji8.com/tvbox.json");
+        apis.add("https://www.100km.top/0");
+        apis.add("https://tv.xn--yhqu5zs87a.top");
+        apis.add("https://raw.kkgithub.com/gaotianliuyun/gao/master/0825.json");
+        apis.add("https://raw.kkgithub.com/gaotianliuyun/gao/master/js.json");
+        apis.add("https://github.moeyy.xyz/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json");
+        apis.add("http://like.肥猫.com/你好");
+        apis.add("https://ghp.ci/https://raw.githubusercontent.com/yoursmile66/TVBox/main/XC.json");
+        apis.add("https://tv.nxog.top/m/?&bKG");
+        return apis;
     }
 
     /**
@@ -150,7 +187,7 @@ public class SettingUtil {
         }
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            view.setText("公众号：东曦影视");
+            view.setText(Config.GZH);
         }, delayMillis);
     }
 

@@ -93,7 +93,8 @@ public class NoticeDialog implements DialogInterface.OnDismissListener {
                 .load(path)
                 .config(Bitmap.Config.RGB_565)
                 .transform(new RoundTransformation(Base64.encodeToString(path.getBytes(), Base64.DEFAULT))
-                        .centerCorp(true))
+                        .centerCorp(true)
+                        .roundRadius(AutoSizeUtils.mm2px(activity, 15), RoundTransformation.RoundType.ALL))
                 .placeholder(R.drawable.app_homepage_qrcode)
                 .error(R.drawable.app_homepage_qrcode)
                 .into(binding.code);
