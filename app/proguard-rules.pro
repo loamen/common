@@ -16,3 +16,5 @@
 
 #hawk
 -keep class com.orhanobut.hawk.** { *; }
+
+-keep class com.loamen.common.** {*;}
